@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Random;
 
 public class Population {
-	private final static int POPULATION_QUANTITY = 5;
-	private final static int GENES_QUANTITY = 8;
+	public final static int POPULATION_QUANTITY = 5;
+	public final static int GENES_QUANTITY = 8;
 
 	private List<String> chromosomes = new ArrayList<String>();
 
@@ -43,6 +43,16 @@ public class Population {
 		}
 
 		return fitness;
+	}
+
+	public int getMaxFitnessLevel() {
+		int maxFitness = Integer.MIN_VALUE;
+		for (int i = 0; i < chromosomes.size(); i++) {
+			if (getFitness(chromosomes, i) > maxFitness) {
+				maxFitness = getFitness(chromosomes, i);
+			}
+		}
+		return maxFitness;
 	}
 
 	private String getFittest(List<String> list) {
@@ -149,24 +159,27 @@ public class Population {
 	}
 
 	public void addTheFittestOffspring() {
+		
+		if(random.nextInt() % 7 < 5) {
+			List<String> mutationList = mutation();
+			System.out.println("Now executing mutation result, below \n" + mutationList);
 
-		List<String> mutationList = mutation();
+			List<String> fittest = new ArrayList<String>();
+			fittest.add((mutationList.get(0)));
+			List<String> secondFittest = new ArrayList<String>();
+			secondFittest.add((mutationList.get(1)));
 
-		System.out.println("Now executing mutation result, below \n" + mutationList);
+			if (getFitness(fittest, 0) > getFitness(secondFittest, 0)) {
+				chromosomes.remove(getLessFittest(chromosomes));
+				chromosomes.add(fittest.get(0));
+			} else {
+				chromosomes.remove(getLessFittest(chromosomes));
+				chromosomes.add(secondFittest.get(0));
+			}
 
-		List<String> fittest = new ArrayList<String>();
-		fittest.add((mutationList.get(0)));
-		List<String> secondFittest = new ArrayList<String>();
-		secondFittest.add((mutationList.get(1)));
-
-		if (getFitness(fittest, 0) > getFitness(secondFittest, 0)) {
-			chromosomes.remove(getLessFittest(chromosomes));
-			chromosomes.add(fittest.get(0));
-		} else {
-			chromosomes.remove(getLessFittest(chromosomes));
-			chromosomes.add(secondFittest.get(0));
 		}
 
+		
 	}
 
 }
