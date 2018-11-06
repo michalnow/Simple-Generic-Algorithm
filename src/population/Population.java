@@ -95,7 +95,6 @@ public class Population {
 		char[] fittestArr = fittest.toCharArray();
 		char[] secondFittestArr = secondFittest.toCharArray();
 		
-		System.out.println(crossoverPoint);
 		for(int i = 0 ; i < crossoverPoint ; i++) {
 			char tmp = fittestArr[i];
 			fittestArr[i] = secondFittestArr[i];
@@ -110,6 +109,31 @@ public class Population {
 		listAfterCrossover.add(String.valueOf(secondFittestArr));
 		
 		return listAfterCrossover;
+	}
+	
+	public List<String> mutation(){
+		
+		int mutationPoint = random.nextInt(GENES_QUANTITY);
+		char[] fittestAfterCrossover = crossover().get(0).toCharArray();
+		char[] secondFittestAfterCrossover = crossover().get(1).toCharArray();
+		List<String> list = new ArrayList<String>();
+		
+		if(fittestAfterCrossover[mutationPoint] == '0') {
+			fittestAfterCrossover[mutationPoint] = '1';
+		}else {
+			fittestAfterCrossover[mutationPoint] = '0';
+		}
+		
+		mutationPoint = random.nextInt(GENES_QUANTITY);
+		if(secondFittestAfterCrossover[mutationPoint] == '0') {
+			secondFittestAfterCrossover[mutationPoint] = '1';
+		}else {
+			secondFittestAfterCrossover[mutationPoint] = '0';
+		}
+		
+		list.add(String.valueOf(fittestAfterCrossover));
+		list.add(String.valueOf(secondFittestAfterCrossover));
+		return list;
 	}
 
 }
