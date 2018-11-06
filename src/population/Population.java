@@ -45,7 +45,7 @@ public class Population {
 		return fitness;
 	}
 
-	private String getFittest(List<String> list) {
+	public String getFittest(List<String> list) {
 		int fittest = Integer.MIN_VALUE;
 		int fittestIndex = 0;
 
@@ -75,7 +75,7 @@ public class Population {
 		return getFittest(tmp);
 	}
 
-	public List<String> getTwoMostFittest() {
+	public List<String> selection() {
 
 		List<String> twoFittest = new ArrayList<String>();
 
@@ -84,6 +84,32 @@ public class Population {
 
 		return twoFittest;
 
+	}
+	
+	public List<String> crossover(){
+		
+		int crossoverPoint = random.nextInt(GENES_QUANTITY);
+		String fittest = selection().get(0);
+		String secondFittest = selection().get(1);
+		List<String> listAfterCrossover = new ArrayList<String>();
+		char[] fittestArr = fittest.toCharArray();
+		char[] secondFittestArr = secondFittest.toCharArray();
+		
+		System.out.println(crossoverPoint);
+		for(int i = 0 ; i < crossoverPoint ; i++) {
+			char tmp = fittestArr[i];
+			fittestArr[i] = secondFittestArr[i];
+			
+			secondFittestArr[i] = tmp;
+			
+		}
+		
+		
+		
+		listAfterCrossover.add(String.valueOf(fittestArr));
+		listAfterCrossover.add(String.valueOf(secondFittestArr));
+		
+		return listAfterCrossover;
 	}
 
 }
