@@ -8,7 +8,8 @@ public class GenericAlgorithm {
 		population.randomizePopulation();
 		population.showPopulation();
 		System.out.println("===============");
-		System.out.println(population.getTwoMostFittest());
+		System.out.println(population.selection());
+		System.out.println(population.crossover());
 	}
 	
 }
