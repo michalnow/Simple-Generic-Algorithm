@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Population {
 	public final static int POPULATION_QUANTITY = 5;
-	public final static int GENES_QUANTITY = 1000;
+	public final static int GENES_QUANTITY = 150;
 
 	private List<String> chromosomes = new ArrayList<String>();
 
@@ -177,6 +177,9 @@ public class Population {
 				chromosomes.add(secondFittest.get(0));
 			}
 
+		}else {
+			chromosomes.add(crossover().get(0));
+			chromosomes.add(crossover().get(1));
 		}
 
 		
