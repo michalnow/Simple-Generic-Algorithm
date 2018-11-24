@@ -25,6 +25,14 @@ public class Population {
 			chromosome = "";
 		}
 	}
+	
+	public List<String> getChromosomes() {
+		return chromosomes;
+	}
+
+	public void setChromosomes(List<String> chromosomes) {
+		this.chromosomes = chromosomes;
+	}
 
 	public void showPopulation() {
 		for (String chromosome : chromosomes) {
