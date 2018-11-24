@@ -11,9 +11,10 @@ public class Population {
 	private List<String> chromosomes = new ArrayList<String>();
 
 	private Random random;
-	
-	public Population() {}
-	
+
+	public Population() {
+	}
+
 	public void randomizePopulation() {
 
 		random = new Random();
@@ -27,7 +28,7 @@ public class Population {
 			chromosome = "";
 		}
 	}
-	
+
 	public List<String> getChromosomes() {
 		return chromosomes;
 	}
@@ -59,7 +60,7 @@ public class Population {
 		int maxFitness = Integer.MIN_VALUE;
 		for (int i = 0; i < chromosomes.size(); i++) {
 			int fitnessLevel = getFitness(chromosomes, i);
-			if ( fitnessLevel > maxFitness) {
+			if (fitnessLevel > maxFitness) {
 				maxFitness = fitnessLevel;
 			}
 		}
@@ -72,7 +73,7 @@ public class Population {
 
 		for (int i = 0; i < list.size(); i++) {
 			int fitnessLevel = getFitness(list, i);
-			if (fittest <= fitnessLevel ) {
+			if (fittest <= fitnessLevel) {
 				fittest = fitnessLevel;
 				fittestIndex = i;
 			}
@@ -94,11 +95,10 @@ public class Population {
 		}
 
 		return lessFittestIndex;
-}
+	}
 
 	public String getSecondFittest(List<String> list) {
-	
-		
+
 		List<String> tmp = new ArrayList<String>(list);
 		String fittest = getFittest(tmp);
 		int removeIndex = 0;
@@ -147,9 +147,7 @@ public class Population {
 	}
 
 	public List<String> mutation() {
-		
-		
-		
+
 		int mutationPoint = random.nextInt(chromosomes.get(0).length());
 		List<String> crossover = new ArrayList<String>(crossover());
 		char[] fittestAfterCrossover = crossover.get(0).toCharArray();
@@ -175,10 +173,10 @@ public class Population {
 	}
 
 	public void addTheFittestOffspring() {
-		
-		if(random.nextInt(777777) % 7 < 5) {
+
+		if (random.nextInt(777777) % 7 < 5) {
 			List<String> mutationList = mutation();
-			//System.out.println("Now executing mutation result, below \n" + mutationList);
+			// System.out.println("Now executing mutation result, below \n" + mutationList);
 
 			List<String> fittest = new ArrayList<String>();
 			fittest.add((mutationList.get(0)));
@@ -193,14 +191,12 @@ public class Population {
 				chromosomes.add(secondFittest.get(0));
 			}
 
-			}else {
-				List<String> crossover = new ArrayList<String>(crossover());
-				chromosomes.add(crossover.get(0));
-				chromosomes.remove(getLessFittest(chromosomes));
+		} else {
+			List<String> crossover = new ArrayList<String>(crossover());
+			chromosomes.add(crossover.get(0));
+			chromosomes.remove(getLessFittest(chromosomes));
 		}
 
-		
 	}
-
 
 }

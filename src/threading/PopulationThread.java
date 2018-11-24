@@ -7,15 +7,15 @@ import population.Population;
 
 public class PopulationThread implements Runnable {
 
-	private static Population population;
+	private Population population;
 	private int noThreads;
-	private List<String> chromos;
+	private static int number = 0;
+	private static int m = 1;
 
 	public PopulationThread(Population population, int noThreads) {
 
-		PopulationThread.population = population;
+		this.population = population;
 		this.noThreads = noThreads;
-		chromos = new ArrayList<String>();
 
 	}
 
@@ -25,19 +25,13 @@ public class PopulationThread implements Runnable {
 		System.out.println(chromosomes + "\n");
 		String a = "";
 		int endCut = Population.GENES_QUANTITY / noThreads;
-		int chromosomeLength = chromosomes.get(0).length();
-		
+
 		for (int i = 0; i < chromosomes.size(); i++) {
-			a = chromosomes.get(i).substring(0, endCut);
+			a = chromosomes.get(i).substring(number * endCut, endCut * m);
 			list.add(a);
 		}
-		
-		List<String> newList = new ArrayList<String>();
-		for (int i = 0; i < chromosomes.size(); i++) {
-			a = chromosomes.get(i).substring(endCut, chromosomeLength-1);
-			newList.add(a);
-		}
-		
+		number++;
+		m++;
 
 		return list;
 	}
@@ -46,6 +40,7 @@ public class PopulationThread implements Runnable {
 	public void run() {
 		population.setChromosomes(divideChromosomes());
 		population.showPopulation();
+		System.out.println();
 
 		while (population.getMaxFitnessLevel() < Population.GENES_QUANTITY / noThreads) {
 			population.addTheFittestOffspring();
