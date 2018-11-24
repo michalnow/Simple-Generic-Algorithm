@@ -6,17 +6,20 @@ import population.Population;
 public class GenericAlgorithm {
 
 	private static void singleThreadExecution() {
+		
 		int generation = 0;
 		Population population = new Population();
 		population.randomizePopulation();
 		long startTime = System.currentTimeMillis();
 		System.out.println("Generation nr " + generation + " ||| fitness level = " + population.getMaxFitnessLevel());
+		
 		while (population.getMaxFitnessLevel() < population.GENES_QUANTITY) {
 			++generation;
 			population.addTheFittestOffspring();
 			System.out
 					.println("Generation nr " + generation + " ||| fitness level = " + population.getMaxFitnessLevel());
 		}
+		
 		long endTime = System.currentTimeMillis();
 		System.out.println("\n\n\nSolution find in generation number = " + generation + "\nFitness level = "
 				+ population.getMaxFitnessLevel());
