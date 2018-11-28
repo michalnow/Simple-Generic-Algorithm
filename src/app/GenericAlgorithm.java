@@ -14,8 +14,9 @@ public class GenericAlgorithm {
 		population.randomizePopulation();
 		long startTime = System.currentTimeMillis();
 		System.out.println("Generation nr " + generation + " ||| fitness level = " + population.getMaxFitnessLevel());
-
+		
 		while (population.getMaxFitnessLevel() < Population.GENES_QUANTITY) {
+			population.showPopulation();
 			++generation;
 			population.addTheFittestOffspring();
 			System.out
@@ -23,11 +24,12 @@ public class GenericAlgorithm {
 		}
 
 		long endTime = System.currentTimeMillis();
+		long duration = endTime - startTime;
 		System.out.println("\n\n\nSolution find in generation number = " + generation + "\nFitness level = "
 				+ population.getMaxFitnessLevel());
 		population.showPopulation();
 
-		System.out.println("It Took " + (endTime - startTime) + " ms");
+		System.out.println("It Took " + duration + " ms");
 		System.out.println(population.getChromosomes());
 	}
 

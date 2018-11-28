@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Population {
 	public final static int POPULATION_QUANTITY = 5;
-	public final static int GENES_QUANTITY = 10;
+	public final static int GENES_QUANTITY = 5;
 
 	private List<String> chromosomes = new ArrayList<String>();
 
@@ -43,7 +43,7 @@ public class Population {
 		}
 	}
 
-	public int getFitness(List<String> list, int index) {
+	public synchronized int getFitness(List<String> list, int index) {
 
 		int fitness = 0;
 		String chromosome = list.get(index);
@@ -56,7 +56,7 @@ public class Population {
 		return fitness;
 	}
 
-	public int getMaxFitnessLevel() {
+	public synchronized int getMaxFitnessLevel() {
 		int maxFitness = Integer.MIN_VALUE;
 		for (int i = 0; i < chromosomes.size(); i++) {
 			int fitnessLevel = getFitness(chromosomes, i);
@@ -82,7 +82,7 @@ public class Population {
 		return list.get(fittestIndex);
 	}
 
-	public int getLessFittest(List<String> list) {
+	public synchronized int getLessFittest(List<String> list) {
 		int lessFittest = Integer.MAX_VALUE;
 		int lessFittestIndex = 0;
 
@@ -97,7 +97,7 @@ public class Population {
 		return lessFittestIndex;
 	}
 
-	public String getSecondFittest(List<String> list) {
+	public synchronized String getSecondFittest(List<String> list) {
 
 		List<String> tmp = new ArrayList<String>(list);
 		String fittest = getFittest(tmp);
@@ -113,20 +113,20 @@ public class Population {
 		return getFittest(tmp);
 	}
 
-	public List<String> selection() {
+	public synchronized List<String> selection() {
 
 		List<String> twoFittest = new ArrayList<String>();
 
 		twoFittest.add(getFittest(chromosomes));
 		twoFittest.add(getSecondFittest(chromosomes));
-
+		System.out.println("SELECTION " + "\n-------------\n" + twoFittest + "\n-------------");
 		return twoFittest;
 
 	}
 
-	public List<String> crossover() {
+	public synchronized List<String> crossover() {
 
-		int crossoverPoint = random.nextInt(chromosomes.get(0).length());
+		int crossoverPoint = random.nextInt(chromosomes.get(0).length()-2) +1;
 		List<String> selection = new ArrayList<String>(selection());
 		List<String> listAfterCrossover = new ArrayList<String>();
 		char[] fittestArr = selection.get(0).toCharArray();
@@ -142,11 +142,11 @@ public class Population {
 
 		listAfterCrossover.add(String.valueOf(fittestArr));
 		listAfterCrossover.add(String.valueOf(secondFittestArr));
-
+		System.out.println("CROSSOVER, POINT = " + crossoverPoint + "\n-------------\n" + listAfterCrossover+ "\n-------------");
 		return listAfterCrossover;
 	}
 
-	public List<String> mutation() {
+	public synchronized List<String> mutation() {
 
 		int mutationPoint = random.nextInt(chromosomes.get(0).length());
 		List<String> crossover = new ArrayList<String>(crossover());
@@ -160,7 +160,7 @@ public class Population {
 			fittestAfterCrossover[mutationPoint] = '0';
 		}
 
-		mutationPoint = random.nextInt(chromosomes.get(0).length());
+		//mutationPoint = random.nextInt(chromosomes.get(0).length());
 		if (secondFittestAfterCrossover[mutationPoint] == '0') {
 			secondFittestAfterCrossover[mutationPoint] = '1';
 		} else {
@@ -169,10 +169,11 @@ public class Population {
 
 		list.add(String.valueOf(fittestAfterCrossover));
 		list.add(String.valueOf(secondFittestAfterCrossover));
+		System.out.println("MUTATION, POINT = " + mutationPoint + "\n-------------\n" + list+ "\n-------------");
 		return list;
 	}
 
-	public void addTheFittestOffspring() {
+	public synchronized void addTheFittestOffspring() {
 
 		if (random.nextInt(777777) % 7 < 5) {
 			List<String> mutationList = mutation();
