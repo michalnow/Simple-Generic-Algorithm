@@ -31,8 +31,9 @@ public class GenericAlgorithm {
 				+ population.getMaxFitnessLevel());
 		population.showPopulation();
 
-		System.out.println("It Took " + duration + " ms");
+		
 		System.out.println(population.getChromosomes());
+		System.out.println("It Took " + duration + " ms");
 	}
 	
 	private static void multiThreadExecution(int noThreads) {
@@ -42,6 +43,7 @@ public class GenericAlgorithm {
 
 		Population population = new Population();
 		population.randomizePopulation();
+		population.showPopulation();
 		System.out.println("Multi Thread");
 		ExecutorService executor = Executors.newFixedThreadPool(1);
 		for (int i = 0; i < noThreads; i++) {
@@ -53,6 +55,8 @@ public class GenericAlgorithm {
 		while (!executor.isTerminated()) {}
 		
 		long endTime = System.currentTimeMillis();
+		
+		System.out.println(population.getMultiChromosomes());
 		System.out.println("It Took " + (endTime - startTime) + " ms");
 	}
 
@@ -75,6 +79,7 @@ public class GenericAlgorithm {
 			System.out.print("How many threads to inwoke: ");
 			int noThreads = scanner.nextInt();
 			multiThreadExecution(noThreads);
+			
 			break;
 		}
 		
@@ -83,7 +88,7 @@ public class GenericAlgorithm {
 			String bar = foo.substring(0, 5);
 			foo = foo.delete(0, 5);
 			
-			System.out.println("foo = " + foo + "\nbar = " + bar);
+			System.out.println("foo = " + foo.toString() + "\nbar = " + bar);
 			break;
 		}
 

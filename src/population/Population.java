@@ -6,13 +6,16 @@ import java.util.Random;
 
 public class Population {
 	public final static int POPULATION_QUANTITY = 5;
-	public final static int GENES_QUANTITY = 10000;
+	public final static int GENES_QUANTITY = 12000;
 
 	private List<String> chromosomes = new ArrayList<String>();
-
+	private List<String> multiChromosomes = new ArrayList<String>();
 	private Random random;
 
 	public Population() {
+		for(int i=0;i<POPULATION_QUANTITY;i++) {
+			multiChromosomes.add("");
+		}
 	}
 
 	public void randomizePopulation() {
@@ -27,6 +30,15 @@ public class Population {
 			chromosomes.add(chromosome);
 			chromosome = "";
 		}
+	}
+	
+
+	public List<String> getMultiChromosomes() {
+		return multiChromosomes;
+	}
+
+	public void setMultiChromosomes(List<String> multiChromosomes) {
+		this.multiChromosomes = multiChromosomes;
 	}
 
 	public List<String> getChromosomes() {
